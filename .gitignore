@@ -102,3 +102,6 @@ ENV/
 
 #databse
 *.sqlite3
+
+# .idea
+.idea/
