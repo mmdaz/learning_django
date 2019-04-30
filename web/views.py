@@ -16,8 +16,9 @@ from web.utils import grecaptcha_verify
 
 
 def register(request):
-    if request.POST.has_key(
-            'requestcode'):  # form is filled. if not spam, generate code and save in db, wait for email
+    # if request.POST.has_key('requestcode'):
+    if 'requestcode' in request.POST:
+        # form is filled. if not spam, generate code and save in db, wait for email
         # confirmation, return message
         # is this spam? check reCaptcha
         if not grecaptcha_verify(request):  # captcha was not correct
@@ -68,7 +69,8 @@ def register(request):
                            'فرم ذخیره نشده. درست می شه'}  # TODO: forgot password
             # TODO: keep the form data
             return render(request, 'register.html', context)
-    elif request.GET.has_key('code'):  # user clicked on code
+    # elif request.GET.has_key('code'):  # user clicked on code
+    elif 'code' in request.GET:
         code = request.GET['code']
         if Passwordresetcodes.objects.filter(
                 code=code).exists():  # if code is in temporary db, read the data and create the user
