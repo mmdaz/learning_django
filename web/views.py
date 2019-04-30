@@ -9,9 +9,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
+
+from web.constants import TemplateMessage
 from web.models import Token, Income, User, Expense, Passwordresetcodes
 from web.utils import grecaptcha_verify
-from web.constants import TemplateMessage
 
 
 def register(request):
@@ -54,6 +55,7 @@ def register(request):
             message = 'ایمیلی حاوی لینک فعال سازی اکانت به شما فرستاده شده، لطفا پس از چک کردن ایمیل، روی لینک کلیک ' \
                       'کنید. '
             message = 'قدیم ها ایمیل فعال سازی می فرستادیم ولی الان شرکتش ما رو تحریم کرده (: پس راحت و بی دردسر'
+
             body = " برای فعال کردن اکانت بستون خود روی لینک روبرو کلیک کنید: <a href=\"{}?code={}\">لینک رو به رو</a> ".format(
                 request.build_absolute_uri('/accounts/register/'), code)
             message = message + body
